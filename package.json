@@ -1,0 +1,41 @@
+{
+  "name": "media-storage",
+  "version": "0.0.1",
+  "description": "Microservice for storing the media that will be streamed.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon -w . --exec \"babel-node . --presets es2015,stage-0\"",
+    "build": "babel . -s -D -d dist --presets es2015,stage-0",
+    "start": "node dist",
+    "prestart": "npm run -s build",
+    "test": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rso9/media-storage.git"
+  },
+  "keywords": [
+    "media"
+  ],
+  "author": "rso9",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rso9/media-storage/issues"
+  },
+  "homepage": "https://github.com/rso9/media-storage#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "mediaserver": "^0.1.1",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-core": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "eslint": "^5.8.0",
+    "nodemon": "^1.9.2"
+  }
+}
