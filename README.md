@@ -1,4 +1,5 @@
-# media-storage
+# media-storage [![Build Status](https://travis-ci.org/rso9/media-storage.svg?branch=master)](https://travis-ci.org/rso9/media-storage)
+
 Microservice for storing the media that will be streamed.
 
 ## How to set up
