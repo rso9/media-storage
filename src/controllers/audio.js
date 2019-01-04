@@ -6,16 +6,22 @@ const w = require('winston')
 const audioController = {}
 
 audioController.serveSong = (req, res) => {
-    w.log('info', 'ENTRY SERVE SONG ENDPOINT', {songRequested: req.params.name})
+    w.log('info', 'SERVE SONG ENDPOINT', {songRequested: req.params.name, markerName: 'ENTRY'})
     const song = path.join(__dirname, '..', 'storage', 'audio', req.params.name)
-    mediaserver.pipe(req, res, song)
-    w.log('info', 'EXIT SERVE SONG ENDPOINT')
+    const pipe = mediaserver.pipe(req, res, song)
+
+    if (!pipe) {
+        w.log('error', 'SERVE SONG ENDPOINT', {songRequested: req.params.name, markerName: 'EXIT', error: 'File not found'})
+    } else {
+        w.log('info', 'SERVE SONG ENDPOINT', {songRequested: req.params.name, markerName: 'EXIT'})
+    }
+
 }
 
 audioController.uploadSong = (req, res) => {
-    w.log('info', 'ENTRY UPLOAD SONG ENDPOINT', {songUploaded: req.file.originalname})
+    w.log('info', 'UPLOAD SONG ENDPOINT', {songUploaded: req.file.originalname, markerName: 'ENTRY'})
     if (req.file.error) {
-        w.log('error', 'EXIT UPLOAD SONG ENDPOINT')
+        w.log('error', 'UPLOAD SONG ENDPOINT', {songUploaded: req.file.originalname, markerName: 'EXIT', error: req.file.error})
         res.status(req.file.error.status).send(req.file.error)
     } else {
         const song = req.file.originalname;
@@ -24,7 +30,7 @@ audioController.uploadSong = (req, res) => {
         / every song in the application */
         res.status(HttpStatus.OK)
     }
-    w.log('info', 'EXIT UPLOAD SONG ENDPOINT')
+    w.log('info', 'UPLOAD SONG ENDPOINT', {songUploaded: req.file.originalname, markerName: 'EXIT'})
     res.end()
 }
 
