@@ -6,7 +6,7 @@ const maximumFileSizeMB = 50;
 
 const multerOptions = multer.diskStorage({
     destination: (req, res, cb) => {
-        cb(null, path.join(__dirname, '..', 'storage', 'audio'))
+        cb(null, path.join(__dirname, '..', '..', 'storage', 'audio'))
     },
     filename: (req, file, cb) => {
         cb(null, file.originalname)
