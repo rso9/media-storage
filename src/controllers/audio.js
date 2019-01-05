@@ -40,7 +40,7 @@ audioController.uploadSong = (req, res) => {
             .then(res => res.json())
             .then(response => console.log(response))
             .catch(err => {
-                console.log(err)
+                w.log('error', 'UPLOAD SONG ENDPOINT', {songUploaded: req.file.originalname, markerName: 'EXIT', error: err.response.data})
                 res.status(500).send(err)
                 res.end()
             })
