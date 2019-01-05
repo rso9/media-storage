@@ -1,6 +1,8 @@
 import path from 'path'
 import mediaserver from 'mediaserver'
 import HttpStatus from 'http-status-codes'
+import axios from 'axios'
+
 const w = require('winston')
 
 const audioController = {}
@@ -19,15 +21,30 @@ audioController.serveSong = (req, res) => {
 }
 
 audioController.uploadSong = (req, res) => {
+
+    const artistId = parseInt(req.body.artist)
+    const songTitle = req.body.title
+
     w.log('info', 'UPLOAD SONG ENDPOINT', {songUploaded: req.file.originalname, markerName: 'ENTRY'})
     if (req.file.error) {
         w.log('error', 'UPLOAD SONG ENDPOINT', {songUploaded: req.file.originalname, markerName: 'EXIT', error: req.file.error})
         res.status(req.file.error.status).send(req.file.error)
     } else {
         const song = req.file.originalname;
-        /* TODO: at this point, make a request to the catalog microservice,
-        / which will store the location of the file and its filename for
-        / every song in the application */
+
+        axios.post('http://localhost:8080/v1/song', {
+            songName: songTitle,
+            artists: [{id: artistId}],
+            songUrl: '/song/' + song
+        })
+            .then(res => res.json())
+            .then(response => console.log(response))
+            .catch(err => {
+                console.log(err)
+                res.status(500).send(err)
+                res.end()
+            })
+
         res.status(HttpStatus.OK)
     }
     w.log('info', 'UPLOAD SONG ENDPOINT', {songUploaded: req.file.originalname, markerName: 'EXIT'})
