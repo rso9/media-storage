@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/rso9/media-storage#readme",
   "dependencies": {
+    "@kumuluz/kumuluzee-discovery": "^1.0.0",
     "@babel/polyfill": "^7.2.5",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",

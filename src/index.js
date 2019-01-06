@@ -6,6 +6,28 @@ import bodyParser from 'body-parser'
 import config from './config.json'
 import router from './routes/index.js'
 
+import path from 'path'
+
+const configurationPath = path.join(__dirname, 'config', 'config.yaml')
+const KumuluzeeDiscovery = require('@kumuluz/kumuluzee-discovery').default
+const configurationUtil = require('@kumuluz/kumuluzee-config').ConfigurationUtil
+
+let util = null
+
+const register = async () => {
+
+    await configurationUtil.initialize({
+        extension: 'etcd',
+        configPath: configurationPath
+    })
+
+    util = configurationUtil
+    await KumuluzeeDiscovery.initialize({extension: 'etcd'})
+    KumuluzeeDiscovery.registerService()
+}
+
+register()
+
 const pjson = require('../package.json')
 
 const winston = require('winston')
