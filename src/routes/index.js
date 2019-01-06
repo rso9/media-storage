@@ -1,5 +1,6 @@
 import express from 'express'
 import audioController from '../controllers/audio'
+import os from 'os'
 import upload from '../utils/multer/upload'
 const KumuluzeeDiscovery = require('@kumuluz/kumuluzee-discovery').default
 
@@ -18,6 +19,15 @@ router.get('/test', async (req, res) => {
 
   console.log(internalURL)
   res.status(200).json({internalURL})
+})
+
+router.get('/metrics', (req, res) => {
+  res.status(200).json({
+    cpuInfo: os.cpus(),
+    cpuUsage: os.loadavg(),
+    memoryUsage: os.freemem() / os.totalmem(),
+    uptime: os.uptime()
+  })
 })
 
 export default router

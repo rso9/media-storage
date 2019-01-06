@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: media-storage
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name: media-storage
+    spec:
+      containers:
+        - name: media-storage
+          image: rso9/media-storage:0.1.5
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 8080
+          env:
+          - name: KUMULUZEE_DISCOVERY_CLUSTER
+            value: rso9
+          - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
+            value: http://etcd:2379
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: media-storage
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    name: media-storage
+  type: LoadBalancer
