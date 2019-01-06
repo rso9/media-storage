@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: media-storage
-          image: rso9/media-storage:0.1.5
+          image: rso9/media-storage:0.1.6
           imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 8080
