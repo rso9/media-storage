@@ -9,7 +9,7 @@ const router = express.Router()
 router.get('/song/:name', audioController.serveSong)
 router.post('/song', upload.single('song'), audioController.uploadSong)
 router.get('/test', async (req, res) => {
-  internalURL = await KumuluzeeDiscovery.discoverService({
+  let internalURL = await KumuluzeeDiscovery.discoverService({
     value: "catalog",
     version: "1.0.0",
     environment: "dev",
@@ -17,7 +17,7 @@ router.get('/test', async (req, res) => {
   })
 
   console.log(internalURL)
-  res.json({oj})
+  res.status(200).json({internalURL})
 })
 
 export default router
