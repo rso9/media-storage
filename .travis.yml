@@ -10,7 +10,7 @@ services:
   - docker
 
 env:
-  - DOCKER_IMAGE=rso9/media-storage:0.1.0
+  - DOCKER_IMAGE=rso9/media-storage:0.1.1
 
 script:
   - docker build -t "$DOCKER_IMAGE" .
