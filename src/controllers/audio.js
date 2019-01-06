@@ -51,7 +51,7 @@ audioController.uploadSong = async (req, res) => {
             axios.post(internalURL + 'v1/song', {
                 songName: songTitle,
                 artists: [{id: artistId}],
-                songUrl: '/song/' + song
+                songUrl: 'song/' + song
             })
                 .then(res => res.json())
                 .then(response => console.log(response))
